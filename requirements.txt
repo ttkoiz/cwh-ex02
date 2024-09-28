@@ -1,6 +1,21 @@
+contourpy==1.3.0
+cycler==0.12.1
+fonttools==4.53.1
 jupyter_core==5.6.1
 jupyter_nbextensions_configurator==0.6.4
+kiwisolver==1.4.7
 lc_multi_outputs @ https://github.com/NII-cloud-operation/Jupyter-multi_outputs/releases/download/2.2.0.rc2/lc_multi_outputs-2.2.0.rc2.tar.gz#sha256=02ba9cfa640c19905f656bb36f9050871d2bf30ccc31a22d18715b57b6822cb3
 lc_wrapper @ https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master#sha256=3532d8888c60addc76166458666ea7bb47e839dcb688d771a100e8d27e163395
+matplotlib==3.9.2
 nbclassic==1.1.0
 nblineage @ https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/releases/download/0.2.0.rc1/nblineage-0.2.0.rc1.tar.gz#sha256=83c72f47fba076f382578d39a5d2622054546ad8f8ad80a91a37aabd5dbf6f55
+numpy==2.1.1
+packaging==24.1
+pandas==2.2.2
+pillow==10.4.0
+pyparsing==3.1.4
+python-dateutil==2.9.0.post0
+pytz==2024.2
+seaborn==0.13.2
+six==1.16.0
+tzdata==2024.1
