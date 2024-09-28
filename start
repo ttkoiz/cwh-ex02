@@ -162,14 +162,14 @@ if [ "$(id -u)" == 0 ] ; then
     jupyter nbclassic-extension install --py lc_wrapper --sys-prefix 
     jupyter nbclassic-extension enable --py lc_wrapper --sys-prefix
     mkdir -p /tmp/kernels/python3-wrapper /tmp/wrapper-kernels/python3
-    echo "{\"display_name\": \"Python 3 (LC_wrapper)\", \"language\": \"python\", \"argv\": [\"$CONDA_DIR/envs/notebook/bin/python\", \"-m\", \"lc_wrapper\", \"-f\", \"{connection_file}\" ]}" > /tmp/kernels/python3-wrapper/kernel.json
+    echo "{\"display_name\": \"Python 3 (LC_wrapper)\", \"language\": \"python\", \"argv\": [\"$CONDA_PREFIX/bin/python\", \"-m\", \"lc_wrapper\", \"-f\", \"{connection_file}\" ]}" > /tmp/kernels/python3-wrapper/kernel.json
     jupyter kernelspec install /tmp/kernels/python3-wrapper --sys-prefix
-    echo "{\"display_name\": \"Python 3\", \"language\": \"python\", \"argv\": [\"$CONDA_DIR/envs/notebook/bin/python\", \"-m\", \"lc_wrapper\", \"-f\", \"{connection_file}\" ]}" > /tmp/wrapper-kernels/python3/kernel.json
+    echo "{\"display_name\": \"Python 3\", \"language\": \"python\", \"argv\": [\"$CONDA_PREFIX/bin/python\", \"-m\", \"lc_wrapper\", \"-f\", \"{connection_file}\" ]}" > /tmp/wrapper-kernels/python3/kernel.json
     jupyter wrapper-kernelspec install /tmp/wrapper-kernels/python3 --sys-prefix
     rm -rf /tmp/kernels /tmp/wrapper-kernels
-    touch $CONDA_DIR/envs/notebook/etc/jupyter/jupyter_notebook_config.py
-    echo "c.MultiKernelManager.kernel_manager_class = 'lc_wrapper.AsyncLCWrapperKernelManager'" >> $CONDA_DIR/envs/notebook/etc/jupyter/jupyter_notebook_config.py
-    echo "c.NotebookApp.kernel_spec_manager_class = 'lc_wrapper.LCWrapperKernelSpecManager'" >> $CONDA_DIR/envs/notebook/etc/jupyter/jupyter_notebook_config.py
+    touch $CONDA_PREFIX/etc/jupyter/jupyter_notebook_config.py
+    echo "c.MultiKernelManager.kernel_manager_class = 'lc_wrapper.AsyncLCWrapperKernelManager'" >> $CONDA_PREFIX/etc/jupyter/jupyter_notebook_config.py
+    echo "c.NotebookApp.kernel_spec_manager_class = 'lc_wrapper.LCWrapperKernelSpecManager'" >> $CONDA_PREFIX/etc/jupyter/jupyter_notebook_config.py
 
     # Optionally grant passwordless sudo rights for the desired user
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == "yes" ]]; then
@@ -178,15 +178,15 @@ if [ "$(id -u)" == 0 ] ; then
     fi
 
     # Custom get_ipython().system() to control error propagation of shell commands
-    mkdir -p $CONDA_DIR/etc/ipython/startup/ 
-    cat <<EOF > $CONDA_DIR/etc/ipython/ipython_config.py
+    mkdir -p $CONDA_PREFIX/etc/ipython/startup/ 
+    cat <<EOF > $CONDA_PREFIX/etc/ipython/ipython_config.py
 import glob
 import sys
 import os.path
 
 c.InteractiveShellApp.exec_files = glob.glob(os.path.join(sys.prefix, 'etc', 'ipython', '[0-9][0-9]*.py'))
 EOF
-    cat <<EOF > $CONDA_DIR/etc/ipython/startup/10-custom-get_ipython_system.py
+    cat <<EOF > $CONDA_PREFIX/etc/ipython/startup/10-custom-get_ipython_system.py
 # To install, execute the following command
 #    ipython profile create
 # Copy this file to .ipython/profile_default/startup
@@ -203,7 +203,6 @@ def get_ipython_system(_cmd):
     if get_ipython().user_ns['_exit_code'] != 0:
         raise RuntimeError('Unexpected exit code: %d' % get_ipython().user_ns['_exit_code'])
 EOF
-
 
     # NOTE: This hook is run as the root user!
     run-hooks /usr/local/bin/before-notebook.d
