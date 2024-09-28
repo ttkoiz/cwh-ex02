@@ -162,9 +162,9 @@ if [ "$(id -u)" == 0 ] ; then
     jupyter nbclassic-extension install --py lc_wrapper --sys-prefix 
     jupyter nbclassic-extension enable --py lc_wrapper --sys-prefix
     mkdir -p /tmp/kernels/python3-wrapper /tmp/wrapper-kernels/python3
-    echo '{"display_name": "Python 3 (LC_wrapper)", "language": "python", "argv": ["$CONDA_DIR/envs/notebook/bin/python", "-m", "lc_wrapper", "-f", "{connection_file}" ]}' > /tmp/kernels/python3-wrapper/kernel.json
+    echo "{\"display_name\": \"Python 3 (LC_wrapper)\", \"language\": \"python\", \"argv\": [\"$CONDA_DIR/envs/notebook/bin/python\", \"-m\", \"lc_wrapper\", \"-f\", \"{connection_file}\" ]}" > /tmp/kernels/python3-wrapper/kernel.json
     jupyter kernelspec install /tmp/kernels/python3-wrapper --sys-prefix
-    echo '{"display_name": "Python 3", "language": "python", "argv": ["$CONDA_DIR/envs/notebook/bin/python", "-m", "lc_wrapper", "-f", "{connection_file}" ]}' > /tmp/wrapper-kernels/python3/kernel.json
+    echo "{\"display_name\": \"Python 3\", \"language\": \"python\", \"argv\": [\"$CONDA_DIR/envs/notebook/bin/python\", \"-m\", \"lc_wrapper\", \"-f\", \"{connection_file}\" ]}" > /tmp/wrapper-kernels/python3/kernel.json
     jupyter wrapper-kernelspec install /tmp/wrapper-kernels/python3 --sys-prefix
     rm -rf /tmp/kernels /tmp/wrapper-kernels
     touch $CONDA_DIR/envs/notebook/etc/jupyter/jupyter_notebook_config.py
