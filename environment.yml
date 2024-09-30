@@ -1,0 +1,4 @@
+channels:
+  - conda-forge
+dependencies:
+  - jupyterhub-singleuser==3.*
